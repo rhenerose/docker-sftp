@@ -1,13 +1,13 @@
-# SFTP
+# Docker SFTP
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/atmoz/sftp/build?logo=github) ![GitHub stars](https://img.shields.io/github/stars/atmoz/sftp?logo=github) ![Docker Stars](https://img.shields.io/docker/stars/atmoz/sftp?label=stars&logo=docker) ![Docker Pulls](https://img.shields.io/docker/pulls/atmoz/sftp?label=pulls&logo=docker)
+forked from [atmoz/sftp](https://github.com/atmoz/sftp)
 
-![OpenSSH logo](https://raw.githubusercontent.com/atmoz/sftp/master/openssh.png "Powered by OpenSSH")
+![GitHub stars](https://img.shields.io/github/stars/rhenerose/sftp?logo=github) ![Docker Stars](https://img.shields.io/docker/stars/rhene/sftp?label=stars&logo=docker) ![Docker Pulls](https://img.shields.io/docker/pulls/rhene/sftp?label=pulls&logo=docker)
 
 # Supported tags and respective `Dockerfile` links
 
-- [`debian`, `latest` (*Dockerfile*)](https://github.com/atmoz/sftp/blob/master/Dockerfile) ![Docker Image Size (debian)](https://img.shields.io/docker/image-size/atmoz/sftp/debian?label=debian&logo=debian&style=plastic)
-- [`alpine` (*Dockerfile*)](https://github.com/atmoz/sftp/blob/master/Dockerfile-alpine) ![Docker Image Size (alpine)](https://img.shields.io/docker/image-size/atmoz/sftp/alpine?label=alpine&logo=Alpine%20Linux&style=plastic)
+- [`debian`, `latest` (*Dockerfile*)](https://github.com/rhenerose/docker-sftp/blob/main/Dockerfile) ![Docker Image Size (debian)](https://img.shields.io/docker/image-size/rhene/sftp/debian?label=debian&logo=debian&style=plastic)
+- [`alpine` (*Dockerfile*)](https://github.com/rhenerose/docker-sftp/blob/main/Dockerfile-alpine) ![Docker Image Size (alpine)](https://img.shields.io/docker/image-size/rhene/sftp/alpine?label=alpine&logo=Alpine%20Linux&style=plastic)
 
 # Securely share your files
 
@@ -36,7 +36,7 @@ Easy to use SFTP ([SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH
 ## Simplest docker run example
 
 ```
-docker run -p 22:22 -d atmoz/sftp foo:pass:::upload
+docker run -p 22:22 -d rhene/sftp foo:pass:::upload
 ```
 
 User "foo" with password "pass" can login with sftp and upload files to a folder called "upload". No mounted directories or custom UID/GID. Later you can inspect the files and use `--volumes-from` to mount them somewhere else (or see next example).
@@ -48,7 +48,7 @@ Let's mount a directory and set UID:
 ```
 docker run \
     -v <host-dir>/upload:/home/foo/upload \
-    -p 2222:22 -d atmoz/sftp \
+    -p 2222:22 -d rhene/sftp \
     foo:pass:1001
 ```
 
@@ -56,7 +56,7 @@ docker run \
 
 ```
 sftp:
-    image: atmoz/sftp
+    image: rhene/sftp
     volumes:
         - <host-dir>/upload:/home/foo/upload
     ports:
@@ -74,7 +74,7 @@ The OpenSSH server runs by default on port 22, and in this example, we are forwa
 docker run \
     -v <host-dir>/users.conf:/etc/sftp/users.conf:ro \
     -v mySftpVolume:/home \
-    -p 2222:22 -d atmoz/sftp
+    -p 2222:22 -d rhene/sftp
 ```
 
 <host-dir>/users.conf:
@@ -92,7 +92,7 @@ Add `:e` behind password to mark it as encrypted. Use single quotes if using ter
 ```
 docker run \
     -v <host-dir>/share:/home/foo/share \
-    -p 2222:22 -d atmoz/sftp \
+    -p 2222:22 -d rhene/sftp \
     'foo:$1$0G2g0GSt$ewU0t6GXG15.0hWoOX8X9.:e:1001'
 ```
 
@@ -108,7 +108,7 @@ docker run \
     -v <host-dir>/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro \
     -v <host-dir>/id_other.pub:/home/foo/.ssh/keys/id_other.pub:ro \
     -v <host-dir>/share:/home/foo/share \
-    -p 2222:22 -d atmoz/sftp \
+    -p 2222:22 -d rhene/sftp \
     foo::1001
 ```
 
@@ -121,7 +121,7 @@ docker run \
     -v <host-dir>/ssh_host_ed25519_key:/config/sshd/keys/ssh_host_ed25519_key \
     -v <host-dir>/ssh_host_rsa_key:/config/sshd/keys/ssh_host_rsa_key \
     -v <host-dir>/share:/home/foo/share \
-    -p 2222:22 -d atmoz/sftp \
+    -p 2222:22 -d rhene/sftp \
     foo::1001
 ```
 
