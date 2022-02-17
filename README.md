@@ -29,7 +29,7 @@ Easy to use SFTP ([SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH
     Just remember that the users can't create new files directly under their
     own home directory, so make sure there are at least one subdirectory if you
     want them to upload files.
-  - For consistent server fingerprint, mount your own host keys (i.e. `/etc/ssh/ssh_host_*`)
+  - For consistent server fingerprint, mount your own host keys (i.e. `/config/sshd/keys/ssh_host_*`)
 
 # Examples
 
@@ -118,8 +118,8 @@ This container will generate new SSH host keys at first run. To avoid that your 
 
 ```
 docker run \
-    -v <host-dir>/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key \
-    -v <host-dir>/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key \
+    -v <host-dir>/ssh_host_ed25519_key:/config/sshd/keys/ssh_host_ed25519_key \
+    -v <host-dir>/ssh_host_rsa_key:/config/sshd/keys/ssh_host_rsa_key \
     -v <host-dir>/share:/home/foo/share \
     -p 2222:22 -d atmoz/sftp \
     foo::1001
