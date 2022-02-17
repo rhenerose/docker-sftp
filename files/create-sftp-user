@@ -108,6 +108,7 @@ if [ -n "$dir" ]; then
             chown -R "$uid:users" "$dirPath"
         else
             log "Directory already exists: $dirPath"
+            chown -R "$uid:users" "$dirPath"
         fi
     done
 fi
