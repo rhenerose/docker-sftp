@@ -3,6 +3,9 @@ version: '3'
 services:
   ftp:
     restart: always
+    # cap_add:
+    #   - SYS_ADMIN
+    privileged: true
     build:
       context: .
       dockerfile: Dockerfile-alpine
@@ -12,10 +15,10 @@ services:
       - "2222:22"
     volumes:
       # upload directory
-      - ./data/ftp:/home/test/ftp
+      - ./volumes/home/test/ftp:/home/test/ftp
       # config directory
       # save host key file to /config/sshd/keys
-      - ./data/sftp/config:/config/sshd
+      - ./volumes/config/sshd:/config/sshd
 
     environment:
       TZ: Asia/Tokyo
